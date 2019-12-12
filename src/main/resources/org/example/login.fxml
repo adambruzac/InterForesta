@@ -33,5 +33,6 @@
       </Label>
       <TextField fx:id="txt_username" layoutX="253.0" layoutY="357.0" prefHeight="30.0" prefWidth="171.0" />
       <PasswordField fx:id="txt_password" layoutX="253.0" layoutY="407.0" prefHeight="30.0" prefWidth="171.0" />
+      <Label fx:id="lbl_msg" layoutX="85.0" layoutY="444.0" prefHeight="48.0" prefWidth="338.0" />
    </children>
 </AnchorPane>
