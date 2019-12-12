@@ -1,4 +1,5 @@
-org/example/PrimaryController.class
+org/example/LoginController.class
 module-info.class
 org/example/App.class
 org/example/SecondaryController.class
+org/example/db_connection.class
