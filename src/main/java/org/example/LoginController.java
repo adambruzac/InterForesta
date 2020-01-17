@@ -1,12 +1,16 @@
 package org.example;
 
-import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.sql.*;
+import Connection.db_connection;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class LoginController {
@@ -20,28 +24,27 @@ public class LoginController {
     @FXML
     private void switchToSecondary() throws IOException {
 
-//Code from  https://github.com/antkaynak/JavaFX-SQL-Login-Template/blob/master/SQLogin/src/sample/Controller.java --
-        String checkUser = txt_username.getText();
-        String checkPassword = txt_password.getText();
-        String sql = "SELECT * FROM users WHERE user_name = ? AND user_password = ?";
+        db_connection connectionClass=new db_connection();
+        Connection connection=connectionClass.getConnection();
+
         try {
-            String JDBC_URL = "jdbc:sqlserver://interforesta.cczcoxmc3e60.us-east-2.rds.amazonaws.com:1433;databaseName=interforesta;user=admin;password=Anideliceu.1";
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection connObj = DriverManager.getConnection(JDBC_URL);
-            Statement command = connObj.createStatement();
-            ResultSet rs = command.executeQuery("SELECT * FROM users WHERE user_name = '" + txt_username.getText() + "' AND user_password='" + txt_password.getText() + "';");
-            if (rs.next()) {
+            Statement statement=connection.createStatement();
+            String sql="SELECT * FROM InterForesta.users WHERE userName = '"+txt_username.getText()+"' AND userPassword = '"+txt_password.getText()+"';";
+            ResultSet resultSet=statement.executeQuery(sql);
+
+            if (resultSet.next()){
                 App.setRoot("secondary");
-
-
-            } else {
-                lbl_msg.setText("Login unsuccesful!");
+                System.out.println("ok");
+            }else {
+                lbl_msg.setText("bad user");
+                System.out.println("not ok");
             }
-        }
-         catch(Exception sqlException) {
-            sqlException.printStackTrace();
-        }
 
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

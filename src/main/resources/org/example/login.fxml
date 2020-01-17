@@ -11,7 +11,7 @@
 
 <AnchorPane fx:id="btn_login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.LoginController">
    <children>
-      <Button layoutX="221.0" layoutY="492.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="48.0" prefWidth="159.0" text="LOGIN">
+      <Button layoutX="221.0" layoutY="518.0" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="48.0" prefWidth="159.0" text="LOGIN">
          <font>
             <Font size="25.0" />
          </font>
@@ -23,6 +23,6 @@
       </ImageView>
       <TextField fx:id="txt_username" layoutX="151.0" layoutY="356.0" prefHeight="30.0" prefWidth="298.0" promptText="Username" />
       <PasswordField fx:id="txt_password" layoutX="151.0" layoutY="406.0" prefHeight="30.0" prefWidth="298.0" promptText="Password" />
-      <Label fx:id="lbl_msg" layoutX="85.0" layoutY="444.0" prefHeight="48.0" prefWidth="338.0" />
+      <Label fx:id="lbl_msg" layoutX="131.0" layoutY="453.0" prefHeight="48.0" prefWidth="338.0" />
    </children>
 </AnchorPane>
