@@ -33,7 +33,7 @@ public class LoginController {
             ResultSet resultSet=statement.executeQuery(sql);
 
             if (resultSet.next()){
-                App.setRoot("secondary");
+                App.setRoot("addCategory");
                 System.out.println("ok");
             }else {
                 lbl_msg.setText("bad user");
