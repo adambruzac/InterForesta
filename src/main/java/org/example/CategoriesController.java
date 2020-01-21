@@ -15,11 +15,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,6 +51,9 @@ public class CategoriesController {
     @FXML
     public Label lbl_importFile;
 
+    @FXML
+    public ImageView img_qr;
+
     private ObservableList<CategoriesController> data;
 
 
@@ -74,6 +80,7 @@ public class CategoriesController {
         }
         loadDataFromDatabase();
         generateQRCode();
+
     }
 
     /*-----------------------------------------------------------------*/
@@ -103,11 +110,12 @@ public class CategoriesController {
 
     /*-----------------------------------------------------------------*/
     @FXML
-    private void generateQRCode(){
+    public void generateQRCode(){
         try {
             String qrCodeText = "SELECT * FROM categories WHERE catID=" + txt_categoyID.getText();
-            String filePath = "JD.png";
-            int size = 300;
+            String filePath = txt_categoyID.getText() + ".png";
+
+            int size = 400;
             String fileType = "png";
             File qrFile = new File(filePath);
             // Create the ByteMatrix for the QR-Code that encodes the given String
@@ -134,11 +142,20 @@ public class CategoriesController {
                 }
             }
             ImageIO.write(image, fileType, qrFile);
+            Image qrImage = new Image(new FileInputStream(filePath));
+            img_qr.setImage(qrImage);
         } catch (WriterException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+    }
+
+
+    @FXML
+    public void printQRCode(){
 
 
     }

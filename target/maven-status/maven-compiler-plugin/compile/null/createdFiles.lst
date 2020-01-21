@@ -1,5 +1,4 @@
 org\example\CategoriesController.class
-org\example\createQRCode.class
 org\example\categoriesDetails.class
 module-info.class
 Connection\db_connection.class
