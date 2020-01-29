@@ -150,15 +150,8 @@ public class CategoriesController {
             e.printStackTrace();
         }
 
-
     }
 
-
-    @FXML
-    public void printQRCode(){
-
-
-    }
 
 
 }
