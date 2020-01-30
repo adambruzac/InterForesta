@@ -1,6 +1,6 @@
 package org.example;
 
-import Connection.db_connection;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -65,7 +65,7 @@ public class CategoriesController {
     private void addCategory() throws IOException {
 
 
-    String sql = "INSERT INTO categories(catID, category_name)" + " VALUES (?, ?)";
+        String sql = "INSERT INTO categories(category_ID, category_name)" + " VALUES (?, ?)";
 
         try {
             // create the mysql insert preparedstatement
@@ -86,25 +86,25 @@ public class CategoriesController {
     /*-----------------------------------------------------------------*/
     @FXML
     private void loadDataFromDatabase() throws IOException{
-    try {
-        data = FXCollections.observableArrayList();
-        ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM categories");
-        while (rs.next()){
+        try {
+            data = FXCollections.observableArrayList();
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM categories");
+            while (rs.next()){
 
-            data.add(new categoriesDetails(rs.getString(1), rs.getString(2)));
+                data.add(new categoriesDetails(rs.getString(1), rs.getString(2)));
 
+            }
+
+        } catch (SQLException ex){
+            System.out.println("Error" + ex);
         }
+        column_catID.setCellValueFactory(new PropertyValueFactory<>("catID"));
+        column_catName.setCellValueFactory(new PropertyValueFactory<>("catName"));
 
-    } catch (SQLException ex){
-        System.out.println("Error" + ex);
-    }
-    column_catID.setCellValueFactory(new PropertyValueFactory<>("catID"));
-    column_catName.setCellValueFactory(new PropertyValueFactory<>("catName"));
+        tbl_catTable.setItems(null);
+        tbl_catTable.setItems(data);
 
-    tbl_catTable.setItems(null);
-    tbl_catTable.setItems(data);
-
-    System.out.println("Button to view categories pressed!");
+        System.out.println("Button to view categories pressed!");
 
     }
 

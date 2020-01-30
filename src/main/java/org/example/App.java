@@ -1,5 +1,6 @@
 package org.example;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,19 +14,21 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-
+    private Stage stage;
     private static Scene scene;
 
 
 
     @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("login"));
+    public void start(Stage primaryStage) throws IOException {
+        stage = primaryStage;
+        scene = new Scene(loadFXML("login"), 1800, 800);
         stage.setScene(scene);
+        stage.setTitle("InterForesta");
         stage.show();
-        System.out.println("Test");
 
     }
+
 
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
