@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import Connection.db_connection;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,18 +20,22 @@ public class LoginController {
     @FXML
     private TextField txt_password;
 
+
+
     @FXML
     private void switchToSecondary() throws IOException {
+
 
         db_connection connectionClass=new db_connection();
         Connection connection=connectionClass.getConnection();
 
         try {
             Statement statement=connection.createStatement();
-            String sql="SELECT * FROM InterForesta.users WHERE userName = '"+txt_username.getText()+"' AND userPassword = '"+txt_password.getText()+"';";
+            String sql="SELECT * FROM interforesta.users WHERE user_name = '"+txt_username.getText()+"' AND user_password = '"+txt_password.getText()+"';";
             ResultSet resultSet=statement.executeQuery(sql);
 
             if (resultSet.next()){
+
                 App.setRoot("addCategory");
                 System.out.println("ok");
             }else {
@@ -48,6 +51,21 @@ public class LoginController {
 
     }
 
+
+
+        /*
+                db_connection connectionClass=new db_connection();
+
+        String usernames = "MATCH (u:Users{username:\"admin\"})";
+        String password = "MATCH (u:Users{password:\"admin\"})";
+
+        if(usernames == txt_username.getText() && password == txt_password.getText()){
+            App.setRoot("addCategory");
+        }
+
+
+
+*/
 
 }
 
