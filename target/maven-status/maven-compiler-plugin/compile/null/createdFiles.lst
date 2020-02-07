@@ -1,6 +1,5 @@
 org\example\CategoriesController.class
-module-info.class
-org\example\App.class
 org\example\categoriesDetails.class
 org\example\db_connection.class
+module-info.class
 org\example\LoginController.class
