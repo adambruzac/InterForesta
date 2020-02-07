@@ -1,5 +1,9 @@
 org\example\CategoriesController.class
+org\example\productDetails.class
 org\example\categoriesDetails.class
 org\example\db_connection.class
+org\example\dashboardController.class
+org\example\ProductsController.class
 module-info.class
+org\example\App.class
 org\example\LoginController.class

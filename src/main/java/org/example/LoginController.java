@@ -36,14 +36,12 @@ public class LoginController {
 
             if (resultSet.next()){
 
-                App.setRoot("addCategory");
+                App.setRoot("dashboard");
                 System.out.println("ok");
             }else {
                 lbl_msg.setText("bad user");
                 System.out.println("not ok");
             }
-
-
 
         } catch (SQLException e) {
             e.printStackTrace();
