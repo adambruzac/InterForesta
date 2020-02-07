@@ -57,9 +57,9 @@ public class CategoriesController {
     private ObservableList<CategoriesController> data;
 
 
-
     db_connection connectionClass=new db_connection();
     Connection connection=connectionClass.getConnection();
+
 
     @FXML
     private void addCategory() throws IOException {

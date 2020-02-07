@@ -1,32 +1,27 @@
 package org.example;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class productDetails extends ProductsController {
 
 
 
+
     private final StringProperty product_id;
     private final StringProperty product_name;
     private final StringProperty product_details;
-    private final IntegerProperty product_price;
+    private final DoubleProperty product_price;
     private final IntegerProperty product_stock;
 
-
-
-    public productDetails(String product_id, String product_name, Integer product_price, String product_details){
-
-        this.product_id = new SimpleStringProperty(product_id);
-        this.product_name = new SimpleStringProperty(product_name);
-        this.product_details = new SimpleStringProperty(product_details);
-        this.product_price = new SimpleIntegerProperty(product_price);
-        this.product_stock = new SimpleIntegerProperty(product_stock);
-
+    public productDetails(StringProperty product_id, StringProperty product_name, StringProperty product_details, DoubleProperty product_price, IntegerProperty product_stock) {
+        this.product_id = product_id;
+        this.product_name = product_name;
+        this.product_details = product_details;
+        this.product_price = product_price;
+        this.product_stock = product_stock;
     }
-
 
     public String getProduct_id() {
         return product_id.get();
@@ -64,15 +59,15 @@ public class productDetails extends ProductsController {
         this.product_details.set(product_details);
     }
 
-    public int getProduct_price() {
+    public double getProduct_price() {
         return product_price.get();
     }
 
-    public IntegerProperty product_priceProperty() {
+    public DoubleProperty product_priceProperty() {
         return product_price;
     }
 
-    public void setProduct_price(int product_price) {
+    public void setProduct_price(double product_price) {
         this.product_price.set(product_price);
     }
 
