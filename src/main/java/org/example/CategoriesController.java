@@ -9,6 +9,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -154,4 +155,13 @@ public class CategoriesController {
 
 
 
+
+    public void goBack(ActionEvent actionEvent) {
+
+        try {
+            App.setRoot("dashboard");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
