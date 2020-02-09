@@ -14,13 +14,30 @@ public class productDetails extends ProductsController {
     private final StringProperty product_details;
     private final DoubleProperty product_price;
     private final IntegerProperty product_stock;
+    private final StringProperty category_id;
 
-    public productDetails(StringProperty product_id, StringProperty product_name, StringProperty product_details, DoubleProperty product_price, IntegerProperty product_stock) {
+
+
+    public productDetails(StringProperty category_id, StringProperty product_id, StringProperty product_name, StringProperty product_details, DoubleProperty product_price, IntegerProperty product_stock) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.product_details = product_details;
         this.product_price = product_price;
         this.product_stock = product_stock;
+        this.category_id = category_id;
+    }
+
+
+    public String getCategory_id() {
+        return category_id.get();
+    }
+
+    public StringProperty category_idProperty() {
+        return category_id;
+    }
+
+    public void setCategory_id(String category_id) {
+        this.category_id.set(category_id);
     }
 
     public String getProduct_id() {

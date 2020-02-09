@@ -66,7 +66,7 @@ public class CategoriesController {
     private void addCategory() throws IOException {
 
 
-        String sql = "INSERT INTO categories(category_ID, category_name)" + " VALUES (?, ?)";
+        String sql = "INSERT INTO categories(catID, category_name)" + " VALUES (?, ?)";
 
         try {
             // create the mysql insert preparedstatement
