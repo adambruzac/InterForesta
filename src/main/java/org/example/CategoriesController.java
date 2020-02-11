@@ -9,6 +9,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -65,7 +66,7 @@ public class CategoriesController {
     private void addCategory() throws IOException {
 
 
-        String sql = "INSERT INTO categories(category_ID, category_name)" + " VALUES (?, ?)";
+        String sql = "INSERT INTO categories(catID, category_name)" + " VALUES (?, ?)";
 
         try {
             // create the mysql insert preparedstatement
@@ -154,4 +155,13 @@ public class CategoriesController {
 
 
 
+
+    public void goBack(ActionEvent actionEvent) {
+
+        try {
+            App.setRoot("dashboard");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
