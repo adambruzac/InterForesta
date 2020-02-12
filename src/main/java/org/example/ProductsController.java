@@ -70,7 +70,7 @@ public class ProductsController implements Initializable {
             PreparedStatement pstStn = connection.prepareStatement(sqlStationName);
             ResultSet stnRS = pstStn.executeQuery(sqlStationName);
             while (stnRS.next()) {
-                comboBox_Categories.getItems().add(stnRS.getString("category_name"));
+                comboBox_Categories.getItems().add(stnRS.getString("catID") + " " + stnRS.getString("category_name"));
             }
             stnRS.close();
             pstStn.close();
