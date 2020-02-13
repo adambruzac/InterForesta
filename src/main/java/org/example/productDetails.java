@@ -4,7 +4,14 @@ import javafx.beans.property.*;
 
 public class productDetails extends ProductsController {
 
-
+    public productDetails(String product_id, String product_name, Double product_price, Integer product_stock, String product_details, String category_id) {
+        this.product_id = new SimpleStringProperty(product_id);
+        this.product_name = new SimpleStringProperty(product_name);
+        this.product_price = new SimpleDoubleProperty(product_price);
+        this.product_stock = new SimpleIntegerProperty(product_stock);
+        this.product_details = new SimpleStringProperty(product_details);
+        this.category_id = new SimpleStringProperty(category_id);
+    }
 
 
     private final StringProperty product_id;
@@ -87,14 +94,7 @@ public class productDetails extends ProductsController {
         this.category_id.set(category_id);
     }
 
-    public productDetails(String product_id, String product_name, String product_details, Double product_price, Integer product_stock, String category_id) {
-        this.product_id = new SimpleStringProperty(product_id);
-        this.product_name = new SimpleStringProperty(product_name);
-        this.product_details = new SimpleStringProperty(product_details);
-        this.product_price = new SimpleDoubleProperty(product_price);
-        this.product_stock = new SimpleIntegerProperty(product_stock);
-        this.category_id = new SimpleStringProperty(category_id);
-    }
+
 
 
 }
