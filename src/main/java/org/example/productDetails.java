@@ -1,8 +1,6 @@
 package org.example;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class productDetails extends ProductsController {
 
@@ -16,29 +14,6 @@ public class productDetails extends ProductsController {
     private final IntegerProperty product_stock;
     private final StringProperty category_id;
 
-
-
-    public productDetails(StringProperty category_id, StringProperty product_id, StringProperty product_name, StringProperty product_details, DoubleProperty product_price, IntegerProperty product_stock) {
-        this.product_id = product_id;
-        this.product_name = product_name;
-        this.product_details = product_details;
-        this.product_price = product_price;
-        this.product_stock = product_stock;
-        this.category_id = category_id;
-    }
-
-
-    public String getCategory_id() {
-        return category_id.get();
-    }
-
-    public StringProperty category_idProperty() {
-        return category_id;
-    }
-
-    public void setCategory_id(String category_id) {
-        this.category_id.set(category_id);
-    }
 
     public String getProduct_id() {
         return product_id.get();
@@ -98,6 +73,27 @@ public class productDetails extends ProductsController {
 
     public void setProduct_stock(int product_stock) {
         this.product_stock.set(product_stock);
+    }
+
+    public String getCategory_id() {
+        return category_id.get();
+    }
+
+    public StringProperty category_idProperty() {
+        return category_id;
+    }
+
+    public void setCategory_id(String category_id) {
+        this.category_id.set(category_id);
+    }
+
+    public productDetails(String product_id, String product_name, String product_details, Double product_price, Integer product_stock, String category_id) {
+        this.product_id = new SimpleStringProperty(product_id);
+        this.product_name = new SimpleStringProperty(product_name);
+        this.product_details = new SimpleStringProperty(product_details);
+        this.product_price = new SimpleDoubleProperty(product_price);
+        this.product_stock = new SimpleIntegerProperty(product_stock);
+        this.category_id = new SimpleStringProperty(category_id);
     }
 
 

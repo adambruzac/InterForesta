@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,13 +26,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Hashtable;
+import java.util.ResourceBundle;
 
-public class CategoriesController {
+public class CategoriesController implements Initializable {
 
 
     @FXML
@@ -79,14 +82,14 @@ public class CategoriesController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        loadDataFromDatabase();
+        loadCatFromDatabase();
         generateQRCode();
 
     }
 
     /*-----------------------------------------------------------------*/
     @FXML
-    private void loadDataFromDatabase() throws IOException{
+    private void loadCatFromDatabase() throws IOException{
         try {
             data = FXCollections.observableArrayList();
             ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM categories");
@@ -160,6 +163,15 @@ public class CategoriesController {
 
         try {
             App.setRoot("dashboard");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            loadCatFromDatabase();
         } catch (IOException e) {
             e.printStackTrace();
         }

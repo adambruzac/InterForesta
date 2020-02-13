@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
@@ -24,14 +25,15 @@ public class ProductsController implements Initializable {
     public TextField txt_productPrice;
     public Button btn_addProduct;
     public Button btn_printQR;
-    public TableView tbl_prodTable;
-    public TableColumn column_prodID;
-    public TableColumn column_prodName;
     public ImageView img_qr;
     public Button btnlogout;
     public TextArea txt_productDetails;
     public ComboBox comboBox_Categories;
-    private ObservableList<CategoriesController> data ;
+    private ObservableList<ProductsController> data ;
+    public TableView<ProductsController> tbl_prodTable;
+    public TableColumn<ProductsController, String> column_prodID;
+    public TableColumn<ProductsController, String> column_prodName;
+
 
 
     db_connection connectionClass=new db_connection();
@@ -58,6 +60,33 @@ public class ProductsController implements Initializable {
 
 
     }
+
+    @FXML
+    private void loadProdFromDatabase() throws IOException{
+        try {
+            Connection connection=connectionClass.getConnection();
+            data = FXCollections.observableArrayList();
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM products");
+            while (rs.next()){
+
+                data.add(new productDetails(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getString(6)));
+
+            }
+
+        } catch (SQLException ex){
+            System.out.println("Error" + ex);
+        }
+        column_prodID.setCellValueFactory(new PropertyValueFactory<>("product_id"));
+        column_prodName.setCellValueFactory(new PropertyValueFactory<>("product_name"));
+
+        tbl_prodTable.setItems(null);
+        tbl_prodTable.setItems(data);
+
+        System.out.println("Products loaded to table");
+
+    }
+
+
 
 @FXML
     public void loadCategories(){
@@ -94,7 +123,14 @@ public class ProductsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadCategories();
+
+
+        try {
+            loadProdFromDatabase();
+            loadCategories();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
