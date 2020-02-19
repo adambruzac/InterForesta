@@ -6,15 +6,15 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -151,12 +151,20 @@ public class ProductsController implements Initializable {
         System.out.println(category);
         return category;
     }
-    public void goBack(ActionEvent actionEvent) {
+    @FXML
+    public void goBack() {
         try {
             App.setRoot("dashboard");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void exit(){
+        Platform.exit();
+        System.exit(0);
+
     }
 
     @Override

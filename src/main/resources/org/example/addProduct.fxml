@@ -42,7 +42,7 @@
             <TableColumn fx:id="column_description" prefWidth="356.0" text="Product description" />
         </columns>
       </TableView>
-      <Button fx:id="btnlogout" layoutX="1457.0" layoutY="712.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="184.0" text="Log out" />
+      <Button fx:id="btnlogout" layoutX="1457.0" layoutY="712.0" mnemonicParsing="false" onAction="#exit" prefHeight="51.0" prefWidth="184.0" text="Log out" />
       <Text layoutX="51.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product price" wrappingWidth="138.84765625">
          <font>
             <Font size="18.0" />
