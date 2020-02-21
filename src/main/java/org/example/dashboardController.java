@@ -20,7 +20,7 @@ public class dashboardController implements Initializable {
     public void showProducts(){
 
     try {
-        App.setRoot("addProduct");
+        App.setRoot("Products");
     } catch (IOException e) {
         e.printStackTrace();
     }

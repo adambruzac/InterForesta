@@ -16,26 +16,34 @@
             <Font size="55.0" />
          </font>
       </Label>
-      <BorderPane prefHeight="700.0" prefWidth="1700.0">
+      <BorderPane maxHeight="1.7976931348623157E308" prefHeight="700.0" prefWidth="1600.0">
          <top>
             <HBox prefHeight="0.0" prefWidth="1600.0" BorderPane.alignment="CENTER" />
          </top>
          <left>
-            <VBox prefHeight="550.0" prefWidth="190.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <VBox maxHeight="1.7976931348623157E308" prefHeight="680.0" prefWidth="170.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
                   <Button fx:id="btn_products" mnemonicParsing="false" onAction="#showProducts" prefHeight="70.0" prefWidth="250.0" text="Products" />
                   <Button fx:id="btn_categories" mnemonicParsing="false" onAction="#showCategories" prefHeight="70.0" prefWidth="250.0" text="Categories" />
                   <Button fx:id="btn_SearchProduct" mnemonicParsing="false" onAction="#showProducts" prefHeight="70.0" prefWidth="250.0" text="Search Product" />
                   <Button fx:id="btn_Users" mnemonicParsing="false" onAction="#showProducts" prefHeight="70.0" prefWidth="250.0" text="Users" />
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="409.0" prefWidth="150.0" />
+                  <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="250.0" text="Log out" />
                </children>
                <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets left="10.0" right="10.0" />
                </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
                <BorderPane.margin>
-                  <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </BorderPane.margin>
             </VBox>
          </left>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER" />
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>
