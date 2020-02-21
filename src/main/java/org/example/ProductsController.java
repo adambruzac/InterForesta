@@ -8,11 +8,14 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.print.Printer;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -39,19 +42,31 @@ public class ProductsController implements Initializable {
     public TextField txt_productID;
     public TextField txt_productName;
     public TextField txt_productPrice;
+    public Label lbl_messageAddProduct;
     public Button btn_addProduct;
     public Button btn_printQR;
     public Button btn_deleteProduct;
     public ImageView img_qr;
     public Button btnlogout;
     public TextArea txt_productDetails;
+    public TextArea txt_printers;
     public ComboBox comboBox_Categories;
+    public ComboBox<String> comboBox_Status;
     public TableView<ProductsController> tbl_prodTable;
     public TableColumn<ProductsController, String> column_prodID;
     public TableColumn<ProductsController, String> column_prodName;
     public TableColumn<ProductsController, String> column_description;
+    public TableColumn<ProductsController, String> column_prodPrice;
+    public TableColumn<ProductsController, String> column_prodCategory;
+    public TableColumn<ProductsController, String> column_dateReceived;
+
+
+
+
+
     db_connection connectionClass = new db_connection();
     private ObservableList<ProductsController> data;
+    comboBox_Status = new ComboBox<>();
 
     @FXML
     private void addProduct() {
@@ -68,17 +83,17 @@ public class ProductsController implements Initializable {
             // execute the preparedstatement
             preparedStmt.execute();
             System.out.println("Product added to the database!");
-            loadProdFromDatabase();
-            generateQRCode();
+            lbl_messageAddProduct.setText("The product " + txt_productName.getText() + "was added succesfully!");
+            //loadProdFromDatabase();
+            //generateQRCode();
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
         txt_productID.clear();
         txt_productName.clear();
         txt_productPrice.clear();
         txt_productDetails.clear();
+
     }
 
     @FXML
@@ -113,7 +128,7 @@ public class ProductsController implements Initializable {
             data = FXCollections.observableArrayList();
             ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM products");
             while (rs.next()) {
-                data.add(new productDetails(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getInt(4), rs.getString(5), rs.getString(6)));
+                data.add(new productDetails(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getString(6)));
             }
         } catch (SQLException ex) {
             System.out.println("Error" + ex);
@@ -168,11 +183,26 @@ public class ProductsController implements Initializable {
             e.printStackTrace();
         }
     }
+
+
+    @FXML
+    public void getPrinters(){
+
+        ObservableSet<Printer> printers = Printer.getAllPrinters();
+        for(Printer printer: printers){
+
+            txt_printers.appendText(printer.getName() + "\n");
+
+        }
+
+    }
+
+
     @FXML
     public void generateQRCode(){
         try {
             String qrCodeText = "SELECT * FROM categories WHERE product_id=" + txt_productID.getText();
-            String filePath = txt_productID.getText() + ".png";
+            String filePath = "src/main/resources/org/QRCodes/" + txt_productID.getText() + ".png";
 
             int size = 400;
             String fileType = "png";
@@ -210,6 +240,9 @@ public class ProductsController implements Initializable {
         }
 
     }
+
+
+
 
 
 
