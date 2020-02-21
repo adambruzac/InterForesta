@@ -22,6 +22,10 @@ import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -33,7 +37,7 @@ import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.ResourceBundle;
 
-public class ProductsController implements Initializable {
+public class ProductsController implements Initializable, Printable {
 
     @FXML
     public TextField txt_productID;
@@ -159,6 +163,14 @@ public class ProductsController implements Initializable {
             e.printStackTrace();
         }
     }
+    @FXML
+    public void editProducts() {
+        try {
+            App.setRoot("addProduct");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     public void exit(){
@@ -180,7 +192,7 @@ public class ProductsController implements Initializable {
     public void generateQRCode(){
         try {
             String qrCodeText = "SELECT * FROM categories WHERE product_id=" + txt_productID.getText();
-            String filePath = txt_productID.getText() + ".png";
+            String filePath = "src/main/resources/org/QRCodes/" + txt_productID.getText() + ".png";
 
             int size = 400;
             String fileType = "png";
@@ -220,8 +232,28 @@ public class ProductsController implements Initializable {
     }
 
 
+    @FXML
+    public void print(){
+
+        PrinterJob job = PrinterJob.getPrinterJob();
+        boolean ok = job.printDialog();
+        if (ok) {
+            job.setJobName("TEST JOB");
+            job.setPrintable((Printable) img_qr);
+            try {
+                job.print();
+            } catch (PrinterException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 
 
+    @Override
+    public int print(Graphics graphics, PageFormat pageFormat, int i) throws PrinterException {
+        return 0;
+    }
 }
 
 
