@@ -51,12 +51,13 @@ public class ProductsController implements Initializable {
     public TextArea txt_productDetails;
     public TextArea txt_printers;
     public ComboBox comboBox_Categories;
-    public ComboBox<String> comboBox_Status;
+    public ComboBox comboBox_Status;
     public TableView<ProductsController> tbl_prodTable;
     public TableColumn<ProductsController, String> column_prodID;
     public TableColumn<ProductsController, String> column_prodName;
     public TableColumn<ProductsController, String> column_description;
     public TableColumn<ProductsController, String> column_prodPrice;
+    public TableColumn<ProductsController, String> column_prodStock;
     public TableColumn<ProductsController, String> column_prodCategory;
     public TableColumn<ProductsController, String> column_dateReceived;
     public TableColumn<ProductsController, String> column_status;
@@ -70,8 +71,8 @@ public class ProductsController implements Initializable {
    // comboBox_Status = new ComboBox<>();
 
     @FXML
-    private void addProduct() {
-        String sql = "INSERT INTO products(product_id, product_name, product_price, product_details, catID)" + " VALUES (?, ?, ?, ?, ?, ?)";
+    private void addProduct() throws IOException {
+        String sql = "INSERT INTO products(product_id, product_name, product_price, product_details, catID, status)" + " VALUES (?, ?, ?, ?, ?, ?)";
         try {
             // create the mysql insert preparedstatement
             Connection connection = connectionClass.getConnection();
@@ -86,7 +87,7 @@ public class ProductsController implements Initializable {
             preparedStmt.execute();
             System.out.println("Product added to the database!");
             lbl_messageAddProduct.setText("The product " + txt_productName.getText() + "was added succesfully!");
-            //loadProdFromDatabase();
+
             //generateQRCode();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,6 +96,7 @@ public class ProductsController implements Initializable {
         txt_productName.clear();
         txt_productPrice.clear();
         txt_productDetails.clear();
+        loadProdFromDatabase();
 
     }
 
@@ -131,16 +133,21 @@ public class ProductsController implements Initializable {
             data = FXCollections.observableArrayList();
             ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM products");
             while (rs.next()) {
-                data.add(new productDetails(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7)));
+                data.add(new productDetails(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getDate(7), rs.getString(8)));
             }
+            column_prodID.setCellValueFactory(new PropertyValueFactory<>("product_id")); //1
+            column_prodName.setCellValueFactory(new PropertyValueFactory<>("product_name")); //2
+            column_description.setCellValueFactory(new PropertyValueFactory<>("product_details")); //3
+            column_prodPrice.setCellValueFactory(new PropertyValueFactory<>("product_price")); //4
+            column_prodStock.setCellValueFactory(new PropertyValueFactory<>("product_stock")); //5
+            column_prodCategory.setCellValueFactory(new PropertyValueFactory<>("category_id")); //6
+            column_dateReceived.setCellValueFactory(new PropertyValueFactory<>("date_received")); //7
+            column_status.setCellValueFactory(new PropertyValueFactory<>("status")); //8
         } catch (SQLException ex) {
             System.out.println("Error" + ex);
         }
-        column_prodID.setCellValueFactory(new PropertyValueFactory<>("product_id"));
-        column_prodName.setCellValueFactory(new PropertyValueFactory<>("product_name"));
-        column_description.setCellValueFactory(new PropertyValueFactory<>("product_details"));
-        column_prodPrice.setCellValueFactory(new PropertyValueFactory<>("product_price"));
-        column_prodCategory.setCellValueFactory(new PropertyValueFactory<>("category_id"));
+
+
         tbl_prodTable.setItems(null);
         tbl_prodTable.setItems(data);
         System.out.println("Products loaded to table");
@@ -192,7 +199,7 @@ public class ProductsController implements Initializable {
             loadProdFromDatabase();
             loadCategories();
             handleStatus();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
