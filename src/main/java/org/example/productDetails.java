@@ -2,9 +2,8 @@ package org.example;
 
 import javafx.beans.property.*;
 
-import java.sql.Date;
-
 public class productDetails extends ProductsController {
+
 
     public String getProduct_id() {
         return product_id.get();
@@ -78,13 +77,31 @@ public class productDetails extends ProductsController {
         this.category_id.set(category_id);
     }
 
-    public productDetails(String product_id, String product_name, String product_details, Double product_price, Integer product_stock, String category_id) {
+    //public Date getReceived_date() {
+    //    return received_date;
+    //}
+
+    public String getStatus() {
+        return status.get();
+    }
+
+    public StringProperty statusProperty() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status.set(status);
+    }
+
+    public productDetails(String product_id, String product_name, String product_details, Double product_price, Integer product_stock, String category_id, String status) {
         this.product_id = new SimpleStringProperty(product_id);
         this.product_name = new SimpleStringProperty(product_name);
         this.product_details = new SimpleStringProperty(product_details);
         this.product_price = new SimpleDoubleProperty(product_price);
         this.product_stock = new SimpleIntegerProperty(product_stock);
         this.category_id = new SimpleStringProperty(category_id);
+        this.status = new SimpleStringProperty(status);
+        //this.received_date = new Date(received_date);
     }
 
 
@@ -94,6 +111,8 @@ public class productDetails extends ProductsController {
     private final DoubleProperty product_price;
     private final IntegerProperty product_stock;
     private final StringProperty category_id;
+    private final StringProperty status;
+    //private final Date received_date;
 
 
 
