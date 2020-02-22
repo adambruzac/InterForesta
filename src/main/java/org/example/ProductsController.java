@@ -66,7 +66,6 @@ public class ProductsController implements Initializable {
 
     db_connection connectionClass = new db_connection();
     private ObservableList<ProductsController> data;
-    comboBox_Status = new ComboBox<>();
 
     @FXML
     private void addProduct() {
