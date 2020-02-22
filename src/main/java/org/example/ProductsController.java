@@ -59,6 +59,7 @@ public class ProductsController implements Initializable {
     public TableColumn<ProductsController, String> column_prodPrice;
     public TableColumn<ProductsController, String> column_prodCategory;
     public TableColumn<ProductsController, String> column_dateReceived;
+    public TableColumn<ProductsController, String> column_status;
 
 
 
@@ -66,10 +67,11 @@ public class ProductsController implements Initializable {
 
     db_connection connectionClass = new db_connection();
     private ObservableList<ProductsController> data;
+   // comboBox_Status = new ComboBox<>();
 
     @FXML
     private void addProduct() {
-        String sql = "INSERT INTO products(product_id, product_name, product_price, product_details, catID)" + " VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO products(product_id, product_name, product_price, product_details, catID)" + " VALUES (?, ?, ?, ?, ?, ?)";
         try {
             // create the mysql insert preparedstatement
             Connection connection = connectionClass.getConnection();
@@ -79,6 +81,7 @@ public class ProductsController implements Initializable {
             preparedStmt.setDouble(3, Double.parseDouble(txt_productPrice.getText()));
             preparedStmt.setString(4, txt_productDetails.getText());
             preparedStmt.setString(5, handleCategory());
+            preparedStmt.setString(6, handleStatus());
             // execute the preparedstatement
             preparedStmt.execute();
             System.out.println("Product added to the database!");
@@ -122,12 +125,13 @@ public class ProductsController implements Initializable {
 
     @FXML
     private void loadProdFromDatabase() throws IOException {
+
         try {
             Connection connection = connectionClass.getConnection();
             data = FXCollections.observableArrayList();
             ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM products");
             while (rs.next()) {
-                data.add(new productDetails(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getString(6)));
+                data.add(new productDetails(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5), rs.getString(6), rs.getString(7)));
             }
         } catch (SQLException ex) {
             System.out.println("Error" + ex);
@@ -135,6 +139,8 @@ public class ProductsController implements Initializable {
         column_prodID.setCellValueFactory(new PropertyValueFactory<>("product_id"));
         column_prodName.setCellValueFactory(new PropertyValueFactory<>("product_name"));
         column_description.setCellValueFactory(new PropertyValueFactory<>("product_details"));
+        column_prodPrice.setCellValueFactory(new PropertyValueFactory<>("product_price"));
+        column_prodCategory.setCellValueFactory(new PropertyValueFactory<>("category_id"));
         tbl_prodTable.setItems(null);
         tbl_prodTable.setItems(data);
         System.out.println("Products loaded to table");
@@ -165,6 +171,13 @@ public class ProductsController implements Initializable {
         System.out.println(category);
         return category;
     }
+    @FXML
+    public String handleStatus(){
+
+        String status = String.valueOf(comboBox_Status.getItems().addAll("New", "Used"));
+        return status;
+    }
+
     public void goBack(ActionEvent actionEvent) {
         try {
             App.setRoot("dashboard");
@@ -178,6 +191,7 @@ public class ProductsController implements Initializable {
         try {
             loadProdFromDatabase();
             loadCategories();
+            handleStatus();
         } catch (IOException e) {
             e.printStackTrace();
         }

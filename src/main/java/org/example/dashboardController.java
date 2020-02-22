@@ -43,7 +43,7 @@ public class dashboardController implements Initializable {
 
         try {
             Connection connection=connectionClass.getConnection();
-            String sql = "SELECT count(*) FROM products";
+            String sql = "SELECT count(*) FROM products1";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery(sql);
             while(resultSet.next()){
