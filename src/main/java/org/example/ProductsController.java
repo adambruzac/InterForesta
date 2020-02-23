@@ -52,6 +52,8 @@ public class ProductsController implements Initializable {
     public TextArea txt_printers;
     public ComboBox comboBox_Categories;
     public ComboBox comboBox_Status;
+    public ComboBox comboBox_Products;
+    //public ComboBox<Rectangle> comboBox_Status = new ComboBox<Rectangle>();
     public TableView<ProductsController> tbl_prodTable;
     public TableColumn<ProductsController, String> column_prodID;
     public TableColumn<ProductsController, String> column_prodName;
@@ -141,7 +143,7 @@ public class ProductsController implements Initializable {
             column_prodPrice.setCellValueFactory(new PropertyValueFactory<>("product_price")); //4
             column_prodStock.setCellValueFactory(new PropertyValueFactory<>("product_stock")); //5
             column_prodCategory.setCellValueFactory(new PropertyValueFactory<>("category_id")); //6
-            column_dateReceived.setCellValueFactory(new PropertyValueFactory<>("date_received")); //7
+            column_dateReceived.setCellValueFactory(new PropertyValueFactory<>("received_date")); //7
             column_status.setCellValueFactory(new PropertyValueFactory<>("status")); //8
         } catch (SQLException ex) {
             System.out.println("Error" + ex);
@@ -152,6 +154,41 @@ public class ProductsController implements Initializable {
         tbl_prodTable.setItems(data);
         System.out.println("Products loaded to table");
     }
+
+
+    @FXML
+    public void loadProducts() {
+        String sqlStationName = " select * from products ";
+        try {
+            Connection connection = connectionClass.getConnection();
+            data = FXCollections.observableArrayList();
+            connection = connectionClass.getConnection();
+            PreparedStatement pstStn = connection.prepareStatement(sqlStationName);
+            ResultSet stnRS = pstStn.executeQuery(sqlStationName);
+            while (stnRS.next()) {
+                comboBox_Products.getItems().add(stnRS.getString("product_name"));
+            }
+
+            stnRS.close();
+            pstStn.close();
+            connection.close();
+
+        } catch (SQLException ex) {
+            System.err.println("ERR" + ex);
+        }
+    }
+
+    @FXML
+    public String handleProducts(){
+
+        String product = String.valueOf(comboBox_Products.getValue());
+        System.out.println(product);
+        return product;
+
+    }
+
+
+
     @FXML
     public void loadCategories() {
         String sqlStationName = " select * from categories ";
@@ -178,10 +215,21 @@ public class ProductsController implements Initializable {
         System.out.println(category);
         return category;
     }
+
+
+    @FXML
+    public void loadStatus(){
+        String loadstatus = String.valueOf(comboBox_Status.getItems().addAll("New", "Used"));
+        System.out.println("Product status combobox loaded!");
+
+    }
+
+
     @FXML
     public String handleStatus(){
 
-        String status = String.valueOf(comboBox_Status.getItems().addAll("New", "Used"));
+        String status = String.valueOf(comboBox_Status.getValue());
+        System.out.println(status);
         return status;
     }
 
@@ -198,7 +246,8 @@ public class ProductsController implements Initializable {
         try {
             loadProdFromDatabase();
             loadCategories();
-            handleStatus();
+            loadProducts();
+            loadStatus();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -37,6 +37,16 @@ public class dashboardController implements Initializable {
 
     }
 
+    public void showReports(){
+
+        try {
+            App.setRoot("reports");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void numberProducts(){
         int rowNumber = 0;
         db_connection connectionClass=new db_connection();
