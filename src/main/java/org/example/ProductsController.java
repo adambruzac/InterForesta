@@ -6,6 +6,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import javafx.beans.value.ObservableIntegerValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
@@ -34,6 +35,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Hashtable;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ProductsController implements Initializable {
@@ -63,13 +65,13 @@ public class ProductsController implements Initializable {
     public TableColumn<ProductsController, String> column_prodCategory;
     public TableColumn<ProductsController, String> column_dateReceived;
     public TableColumn<ProductsController, String> column_status;
-
+    private ObservableList<ProductsController> data;
 
 
 
 
     db_connection connectionClass = new db_connection();
-    private ObservableList<ProductsController> data;
+
    // comboBox_Status = new ComboBox<>();
 
     @FXML
@@ -85,12 +87,13 @@ public class ProductsController implements Initializable {
             preparedStmt.setString(4, txt_productDetails.getText());
             preparedStmt.setString(5, handleCategory());
             preparedStmt.setString(6, handleStatus());
-            // execute the preparedstatement
             preparedStmt.execute();
             System.out.println("Product added to the database!");
-            lbl_messageAddProduct.setText("The product " + txt_productName.getText() + "was added succesfully!");
-
-            //generateQRCode();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("The product " + txt_productName.getText() + " was added succesfully!");
+            alert.showAndWait();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -103,29 +106,33 @@ public class ProductsController implements Initializable {
     }
 
     @FXML
-    private void deleteProduct(){
-       // int selectedIndex = tbl_prodTable.getSelectionModel().getSelectedIndex(data);
-       // String selectedItem = column_prodID.getText(selectedIndex);
-       // System.out.println(selectedItem);
-
-
-       //*String sql = "DELETE FROM products WHERE product_id = ?";
-        /*if(selectedIndex >= 0) {
-          //  Connection connection = connectionClass.getConnection();
-            //PreparedStatement preparedStmt = null;
+    private void deleteProduct() {
+        productDetails selectedIndex = (productDetails)tbl_prodTable.getSelectionModel().getSelectedItem();
+        String selectedItem = selectedIndex.getProduct_id();
+        System.out.println("Selected item to delete is " + selectedItem + " " + selectedIndex.getProduct_name());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setContentText("Are you sure you want to delete product " + selectedIndex.getProduct_name() + " ?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            // ... user chose OK
+            Connection connection = connectionClass.getConnection();
+            PreparedStatement preparedStmt = null;
             try {
-              //  preparedStmt = connection.prepareStatement(sql);
-               // preparedStmt.setString(1, selectedItem);
-                //preparedStmt.execute();
-                System.out.println(selectedItem);
+                String sql = "DELETE FROM products WHERE product_id = ?";
+                preparedStmt = connection.prepareStatement(sql);
+                preparedStmt.setString(1, selectedItem);
+                preparedStmt.execute();
             } catch (Exception e) {
                 e.printStackTrace();
-            }*/
-
-
-
-           // tbl_prodTable.getItems().remove(selectedIndex);
+            }
+            tbl_prodTable.getItems().remove(selectedIndex);
+        } else {
+            // ... user chose CANCEL or closed the dialog
+            alert.close();
         }
+
+    }
 
     @FXML
     private void loadProdFromDatabase() throws IOException {
@@ -178,14 +185,7 @@ public class ProductsController implements Initializable {
         }
     }
 
-    @FXML
-    public String handleProducts(){
 
-        String product = String.valueOf(comboBox_Products.getValue());
-        System.out.println(product);
-        return product;
-
-    }
 
 
 
@@ -209,6 +209,16 @@ public class ProductsController implements Initializable {
             System.err.println("ERR" + ex);
         }
     }
+
+    @FXML
+    public String handleProducts(){
+
+        String product = String.valueOf(comboBox_Products.getValue());
+        System.out.println(product);
+        return product;
+
+    }
+
     @FXML
     public String handleCategory() {
         String category = String.valueOf(comboBox_Categories.getValue());
@@ -267,11 +277,15 @@ public class ProductsController implements Initializable {
     }
 
 
+
+
+
+
     @FXML
-    public void generateQRCode(){
+    public generateQRCode(String x){
         try {
-            String qrCodeText = "SELECT * FROM categories WHERE product_id=" + txt_productID.getText();
-            String filePath = "src/main/resources/org/QRCodes/" + txt_productID.getText() + ".png";
+            String qrCodeText = "SELECT * FROM categories WHERE product_id=" + x;
+            String filePath = "src/main/resources/org/QRCodes/" + x + ".png";
 
             int size = 400;
             String fileType = "png";
@@ -309,12 +323,6 @@ public class ProductsController implements Initializable {
         }
 
     }
-
-
-
-
-
-
 
 }
 

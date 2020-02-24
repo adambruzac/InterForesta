@@ -3,6 +3,7 @@ org\example\productDetails.class
 org\example\categoriesDetails.class
 org\example\db_connection.class
 org\example\dashboardController.class
+org\example\reportsController.class
 org\example\ProductsController.class
 module-info.class
 org\example\App.class

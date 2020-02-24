@@ -27,9 +27,9 @@ public class reportsController implements Initializable {
     private ObservableList<reportsController> data;
 
 
-    @FXML
+   /* @FXML
     public void loadCategories() {
-        XYChart.Series<String> set = new XYChart.Series<>();
+        XYChart.Series<String Integer> set = new XYChart.Series<>();
         String sqlStationName = " select * from categories ";
         try {
             Connection connection = connectionClass.getConnection();
@@ -38,7 +38,7 @@ public class reportsController implements Initializable {
             PreparedStatement pstStn = connection.prepareStatement(sqlStationName);
             ResultSet stnRS = pstStn.executeQuery(sqlStationName);
             while (stnRS.next()) {
-                set.getData().add(new XYChart.Data(stnRS.getString(1));
+                set.getData().add(new XYChart.Data(stnRS.getString(1)));
             }
 
             stnRS.close();
@@ -48,11 +48,11 @@ public class reportsController implements Initializable {
         } catch (SQLException ex) {
             System.err.println("ERR" + ex);
         }
-    }
+    }*/
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadCategories();
+        //loadCategories();
     }
 }

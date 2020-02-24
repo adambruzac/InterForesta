@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
@@ -38,13 +35,6 @@ public class CategoriesController implements Initializable {
 
     @FXML
     public TextField txt_categoryName;
-
-    @FXML
-    public Label lbl_importFile;
-
-    @FXML
-    public ImageView img_qr;
-
     private ObservableList<CategoriesController> data;
 
 
@@ -66,6 +56,11 @@ public class CategoriesController implements Initializable {
             // execute the preparedstatement
             preparedStmt.execute();
             System.out.println("Category added to the database!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("The category " + txt_categoryName.getText() + " was added succesfully!");
+            alert.showAndWait();
         } catch (SQLException e) {
             e.printStackTrace();
         }
